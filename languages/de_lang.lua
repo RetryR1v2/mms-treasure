@@ -1,0 +1,16 @@
+Locales["de_lang"] = {
+    MissionBlipName = 'Finde den Schatz',
+    PromptName = 'Grabe Nach der Truhe',
+    NoDigItem = 'Du hast keine ' .. Config.DigItem,
+    NoMoreTrys = 'Leider kein Glück gehabt Hier wirst du Nix mehr Finden',
+    AlreadyActiveMission = 'Du bist Bereits auf Schatzsuche',
+    NoLuck = 'Leider kein Glück grabe Weiter',
+    MissingLockpick = 'Du hast keinen ' .. Config.LockpickItem,
+    PickThat = 'Knacke die True',
+    TruhePromptName = 'Schatztruhe',
+    LockpickingFailed = 'Aufbrechen der Truhe Fehlgeschlagen',
+    RewardMoney = 'Herzlichen Glückwunsch du findest ',
+    RewardItem = 'Herzlichen Glückwunsch du findest ',
+    MissionStarted = 'Gehe auf Schatzsuche',
+    TruhePromptName2 = 'Öffne die Truhe',
+}
