@@ -18,6 +18,7 @@
 # Changelog
 
 - Initial Release Version 1.1.1
+- 1.1.2 Some Changes with Prompt ( Only need to Overide Client.lua,Readme.md,version.txt,fxmanifest.lua)
 
 # installation 
 

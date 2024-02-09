@@ -164,7 +164,7 @@ AddEventHandler('mms-treasure:client:lockpicktruhe', function(schatztruhecoords)
         Wait(10)
         local playerCoords = GetEntityCoords(PlayerPedId())
         local distance = #(playerCoords - schatztruhecoords)
-        if distance < 4 then
+        if distance < 6 then
             TruheGroupPrompt:ShowGroup(_U('TruhePromptName'))
             if truheprompt:HasCompleted() then
                 local lockpickresult =  VORPcore.Callback.TriggerAwait('mms-treasure:callback:checkforlockpick')
@@ -195,7 +195,7 @@ else
         Wait(10)
         local playerCoords = GetEntityCoords(PlayerPedId())
         local distance = #(playerCoords - schatztruhecoords)
-        if distance < 4 then
+        if distance < 6 then
             TruheGroupPrompt:ShowGroup(_U('TruhePromptName2'))
             if truheprompt:HasCompleted() then
                 TriggerServerEvent('mms-treasure:server:rws')
