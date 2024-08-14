@@ -19,6 +19,8 @@
 
 - Initial Release Version 1.1.1
 - 1.1.2 Some Changes with Prompt ( Only need to Overide Client.lua,Readme.md,version.txt,fxmanifest.lua)
+- 1.1.3 Fixed Bug Blinking Promp
+- Fixed Minor Bug with Lockpicking
 
 # installation 
 

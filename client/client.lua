@@ -21,9 +21,10 @@ AddEventHandler('mms-treasure:client:starttreasure',function()
     local randomselect = math.random(1,#Config.TreasureMissions)
     local selected = Config.TreasureMissions[randomselect]
     if MissionActive == false then
+        MissionActive = true
+        Wait(10)
         TriggerEvent('mms-treasure:client:missionstart',selected)
         VORPcore.NotifyTip(_U('MissionStarted'),  5000)
-        MissionActive = true
     else
         TriggerServerEvent('mms-treasure:server:givebackmap')
         VORPcore.NotifyTip(_U('AlreadyActiveMission'), 5000)
@@ -39,7 +40,7 @@ AddEventHandler('mms-treasure:client:missionstart',function(selected)
     MissionBlipActive = true
     TreasurePrompt = BccUtils.Prompts:SetupPromptGroup()
     treasureprompt = TreasurePrompt:RegisterPrompt(_U('PromptName'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
-    while true do
+    while MissionActive do
         Wait(1)
         for h,v in pairs(Mission) do
         local playerCoords = GetEntityCoords(PlayerPedId())
@@ -161,7 +162,7 @@ AddEventHandler('mms-treasure:client:lockpicktruhe', function(schatztruhecoords)
         stages = {{deg = deg1},{deg = deg2},{deg = deg3}}
     }
     while spawnedtruhe == true do
-        Wait(10)
+        Wait(1)
         local playerCoords = GetEntityCoords(PlayerPedId())
         local distance = #(playerCoords - schatztruhecoords)
         if distance < 6 then
@@ -192,7 +193,7 @@ else
     local TruheGroupPrompt = BccUtils.Prompts:SetupPromptGroup()
     truheprompt = TruheGroupPrompt:RegisterPrompt(_U('TruhePromptName2'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
     while spawnedtruhe == true do
-        Wait(10)
+        Wait(1)
         local playerCoords = GetEntityCoords(PlayerPedId())
         local distance = #(playerCoords - schatztruhecoords)
         if distance < 6 then
@@ -248,4 +249,5 @@ RegisterNetEvent('onResourceStop',function ()
         DeleteObject(schatztruhe)
         spawnedtruhe = false
     end
+    Trys = 0
 end)

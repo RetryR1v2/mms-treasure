@@ -13,11 +13,11 @@ Config.Dig = {
 }
 Config.MaxTrys = 5    --- How much times you can dig before this tresure hunt aborts
 
-Config.ChestNeedPick = true ---- true or false if you have to lockpick the found Chest
+Config.ChestNeedPick = false ---- true or false if you have to lockpick the found Chest
 Config.LockpickItem = 'lockpick'   --- Lockpick Item
 
 
-Config.OnlyMoney = true  -- Set Both to false to get Money and items But you can only get Money or item its random then if both are false
+Config.OnlyMoney = false  -- Set Both to false to get Money and items But you can only get Money or item its random then if both are false
 Config.OnlyItems = false  -- Set Both to false to get Money and items But you can only get Money or item its random then if both are false
 
 Config.RewardCashMin = 50     --- This is the min or Max cash you can get anything between this will be taken
