@@ -13,4 +13,6 @@ Locales["en_lang"] = {
     RewardItem = 'You Found in Chest ',
     MissionStarted = 'Go look for the Treasure',
     TruhePromptName2 = 'Open the Chest',
+    -- New
+    UsageLeft = 'Haltbarkeit: ',
 }

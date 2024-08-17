@@ -73,35 +73,64 @@ end)
 RegisterServerEvent('mms-treasure:server:rws',function ()
     local src = source
     local Character = VORPcore.getUser(src).getUsedCharacter
+    local Firstname = Character.firstname
+    local Fastname = Character.lastname
     if Config.OnlyMoney == true and Config.OnlyItems == false then
         -- money
         local Rewardcash = math.random(Config.RewardCashMin,Config.RewardCashMax)
         Character.addCurrency(0, Rewardcash)
         VORPcore.NotifyTip(src, _U('RewardMoney') .. Rewardcash .. ' $',  5000)
+        if Config.EnableWebHook == true then
+            VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, Firstname .. ' ' .. Lastname .. ' Got a Reward from Treasure ' .. Rewardcash .. ' $', Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+        end
     elseif Config.OnlyMoney == false and Config.OnlyItems == true then
         local randomitem = math.random(1,#Config.RewardItems)
         local rewarditem = Config.RewardItems[randomitem].item
         local rewardamount = Config.RewardItems[randomitem].amount
         exports.vorp_inventory:addItem(src, rewarditem, rewardamount, nil,nil)
         VORPcore.NotifyTip(src, _U('RewardItem') .. rewardamount .. ' ' .. rewarditem,  5000)
+        if Config.EnableWebHook == true then
+            VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, Firstname .. ' ' .. Lastname .. ' Got a Reward from Treasure ' .. rewardamount .. ' ' ..rewarditem, Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+        end
     elseif Config.OnlyMoney == false and Config.OnlyItems == false then
-        local itemormoney = math.random(1,2)
-            if itemormoney == 1 then
-            -- Item
-                local randomitem = math.random(1,#Config.RewardItems)
-                local rewarditem = Config.RewardItems[randomitem].item
-                local rewardamount = Config.RewardItems[randomitem].amount
-                exports.vorp_inventory:addItem(src, rewarditem, rewardamount, nil,nil)
-                VORPcore.NotifyTip(src, _U('RewardItem') .. rewardamount .. ' ' .. rewarditem,  5000)
-            elseif itemormoney == 2 then
-            -- money
-                local Rewardcash = math.random(Config.RewardCashMin,Config.RewardCashMax)
-                Character.addCurrency(0, Rewardcash)
-                VORPcore.NotifyTip(src, _U('RewardMoney') .. Rewardcash .. ' $',  5000)
-            end
+        local randomitem = math.random(1,#Config.RewardItems)
+        local rewarditem = Config.RewardItems[randomitem].item
+        local rewardamount = Config.RewardItems[randomitem].amount
+        exports.vorp_inventory:addItem(src, rewarditem, rewardamount, nil,nil)
+        VORPcore.NotifyTip(src, _U('RewardItem') .. rewardamount .. ' ' .. rewarditem,  5000)
+        local Rewardcash = math.random(Config.RewardCashMin,Config.RewardCashMax)
+        Character.addCurrency(0, Rewardcash)
+        VORPcore.NotifyTip(src, _U('RewardMoney') .. Rewardcash .. ' $',  5000)
+        if Config.EnableWebHook == true then
+            VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, Firstname .. ' ' .. Lastname .. ' Got a Reward from Treasure ' .. Rewardcash .. ' $ and ' .. rewardamount .. ' ' ..rewarditem, Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+        end
     end
 end)
 
+
+--- Metadata Usage Shovel
+
+RegisterServerEvent('mms-treasure:server:ToolUsage',function ()
+    local src = source
+    local ShovelItem = Config.DigItem
+    local RemoveUsage = Config.ShovelUsage
+    local Tool = exports.vorp_inventory:getItem(src, ShovelItem)
+    local ToolMeta =  Tool["metadata"]
+    if next(ToolMeta) == nil then
+        exports.vorp_inventory:subItem(src, ShovelItem, 1,{})
+        exports.vorp_inventory:addItem(src, ShovelItem, 1,{description = _U("UsageLeft") .. 100 - RemoveUsage,durability = 100 - RemoveUsage})
+    else
+        local Durability = ToolMeta.durability - RemoveUsage
+        local description = _U("UsageLeft") .. Durability
+        exports.vorp_inventory:subItem(src, ShovelItem, 1,ToolMeta)
+        if Durability >= Config.MinDurability then
+            exports.vorp_inventory:subItem(src, ShovelItem, 1,ToolMeta)
+            exports.vorp_inventory:addItem(src, ShovelItem, 1,{description = description ,durability = Durability})
+        elseif Durability <= Config.MinDurability then
+            exports.vorp_inventory:subItem(src, 'Handtuch', 1,ToolMeta)
+        end
+    end
+end)
 
 --------------------------------------------------------------------------------------------------
 -- start version check

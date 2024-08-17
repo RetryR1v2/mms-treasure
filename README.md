@@ -21,6 +21,8 @@
 - 1.1.2 Some Changes with Prompt ( Only need to Overide Client.lua,Readme.md,version.txt,fxmanifest.lua)
 - 1.1.3 Fixed Bug Blinking Promp
 - Fixed Minor Bug with Lockpicking
+- 1.1.4 Added Webhook Support
+- Added ToolUsage Digging Tool
 
 # installation 
 

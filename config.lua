@@ -2,8 +2,24 @@ Config = {}
 
 Config.defaultlang = "de_lang" -- Set Language (Current Languages: "en_lang" English, "de_lang" German)
 
+-----------------------------------------------------------------------------------
+----------------------------------Webhook Settings---------------------------------
+-----------------------------------------------------------------------------------
+Config.EnableWebHook = true
+Config.WHTitle = 'Treasure:'
+Config.WHLink = ''  -- Discord WH link Here
+Config.WHColor = 16711680 -- red
+Config.WHName = 'Treasure:' -- name
+Config.WHLogo = '' -- must be 30x30px
+Config.WHFooterLogo = '' -- must be 30x30px
+Config.WHAvatar = '' -- must be 30x30px
+
+-------------------------------------------------------------------------------------
+
 Config.TrasureMapItem = 'schatzkarte'   -- item name in DD you wanna use to start the Tresure
-Config.DigItem = 'shovel'  --- Dig Item 
+Config.DigItem = 'shovel'  --- Dig Item
+Config.ShovelUsage = 2 -- Drains Remaining Usage Each time Shovel
+Config.MinDurability = 2 -- Durability Needed to Dig
 Config.DiggingTimer = 20     --seconds
 Config.Dig = {
     shovel = `p_shovel02x`,
@@ -11,17 +27,18 @@ Config.Dig = {
     bone = "skel_r_hand",
     pos = { 0.06, -0.06, -0.03, 270.0, 165.0, 17.0 },
 }
+
 Config.MaxTrys = 5    --- How much times you can dig before this tresure hunt aborts
 
-Config.ChestNeedPick = false ---- true or false if you have to lockpick the found Chest
+Config.ChestNeedPick = true ---- true or false if you have to lockpick the found Chest
 Config.LockpickItem = 'lockpick'   --- Lockpick Item
 
 
 Config.OnlyMoney = false  -- Set Both to false to get Money and items But you can only get Money or item its random then if both are false
 Config.OnlyItems = false  -- Set Both to false to get Money and items But you can only get Money or item its random then if both are false
 
-Config.RewardCashMin = 50     --- This is the min or Max cash you can get anything between this will be taken
-Config.RewardCashMax = 70    
+Config.RewardCashMin = 40     --- This is the min or Max cash you can get anything between this will be taken
+Config.RewardCashMax = 60    
 
 Config.RewardItems = {     ---- This Are the Items and Amount you can get
     {item = 'diamond', amount = 6},

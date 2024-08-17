@@ -89,6 +89,7 @@ AddEventHandler('mms-treasure:client:startdigging',function()
         end
         TaskPlayAnim(pedp, anim[1], anim[2], 1.0, 1.0, -1, 1, 0, false, false, false)
         AttachEnt(shovelObject, pedp, boneIndex, Attach[1], Attach[2], Attach[3], Attach[4], Attach[5], Attach[6], 0, 1, 1, 1)
+        TriggerServerEvent('mms-treasure:server:ToolUsage')
         TriggerEvent('mms-treasure:client:diggingtimer')
         Citizen.Wait(200)
         RemoveAnimDict(anim[1])
@@ -238,7 +239,8 @@ function AbortMission()
     treasureprompt:TogglePrompt(false)
 end
 
-RegisterNetEvent('onResourceStop',function ()
+RegisterNetEvent('onResourceStop',function(resource)
+    if resource == GetCurrentResourceName() then
     MissionActive = false
     DiggingComplete = false 
     LockpickComplete = false
@@ -250,4 +252,5 @@ RegisterNetEvent('onResourceStop',function ()
         spawnedtruhe = false
     end
     Trys = 0
+end
 end)

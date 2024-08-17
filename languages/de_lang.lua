@@ -13,4 +13,5 @@ Locales["de_lang"] = {
     RewardItem = 'Herzlichen Glückwunsch du findest ',
     MissionStarted = 'Gehe auf Schatzsuche',
     TruhePromptName2 = 'Öffne die Truhe',
+    UsageLeft = 'Haltbarkeit: ',
 }
