@@ -74,7 +74,7 @@ RegisterServerEvent('mms-treasure:server:rws',function ()
     local src = source
     local Character = VORPcore.getUser(src).getUsedCharacter
     local Firstname = Character.firstname
-    local Fastname = Character.lastname
+    local Lastname = Character.lastname
     if Config.OnlyMoney == true and Config.OnlyItems == false then
         -- money
         local Rewardcash = math.random(Config.RewardCashMin,Config.RewardCashMax)
@@ -96,11 +96,10 @@ RegisterServerEvent('mms-treasure:server:rws',function ()
         local randomitem = math.random(1,#Config.RewardItems)
         local rewarditem = Config.RewardItems[randomitem].item
         local rewardamount = Config.RewardItems[randomitem].amount
-        exports.vorp_inventory:addItem(src, rewarditem, rewardamount, nil,nil)
-        VORPcore.NotifyTip(src, _U('RewardItem') .. rewardamount .. ' ' .. rewarditem,  5000)
         local Rewardcash = math.random(Config.RewardCashMin,Config.RewardCashMax)
+        exports.vorp_inventory:addItem(src, rewarditem, rewardamount, nil,nil)
         Character.addCurrency(0, Rewardcash)
-        VORPcore.NotifyTip(src, _U('RewardMoney') .. Rewardcash .. ' $',  5000)
+        VORPcore.NotifyTip(src, _U('RewardItem') .. rewardamount .. ' ' .. rewarditem .. ' ' .. _U('RewardMoney') .. Rewardcash .. ' $',  5000)
         if Config.EnableWebHook == true then
             VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, Firstname .. ' ' .. Lastname .. ' Got a Reward from Treasure ' .. Rewardcash .. ' $ and ' .. rewardamount .. ' ' ..rewarditem, Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
         end
