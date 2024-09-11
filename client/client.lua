@@ -40,6 +40,10 @@ AddEventHandler('mms-treasure:client:missionstart',function(selected)
     MissionBlipActive = true
     TreasurePrompt = BccUtils.Prompts:SetupPromptGroup()
     treasureprompt = TreasurePrompt:RegisterPrompt(_U('PromptName'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
+    -- Create GPS
+    StartGpsMultiRoute(GetHashKey("COLOR_YELLOW"), true, true)
+    AddPointToGpsMultiRoute(BlipCoords)
+    SetGpsMultiRouteRender(true)
     while MissionActive do
         Wait(1)
         for h,v in pairs(Mission) do
@@ -231,6 +235,7 @@ function AbortMission()
     DiggingComplete = false 
     LockpickComplete = false
     MissionBlip:Remove()
+    ClearGpsMultiRoute()
     if spawnedtruhe == true then
         DeleteObject(schatztruhe)
         spawnedtruhe = false

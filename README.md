@@ -25,6 +25,7 @@
 - Added ToolUsage Digging Tool
 - 1.1.5 Webhook Bug Fixed Lastname
 - Only Need to Update if you Wanna Use Webhook if Webhook is Off you can Ignore that Bugfix
+- 1.1.6 Added GPS Usage to Find the Location 
 
 # installation 
 
