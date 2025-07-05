@@ -1,7 +1,8 @@
 local VORPcore = exports.vorp_core:GetCore()
 local BccUtils = exports['bcc-utils'].initiate()
-local MiniGame = exports['bcc-minigames'].initiate()
-
+if Config.UseMinigame == 'BCC' then
+    local MiniGame = exports['bcc-minigames'].initiate()
+end
 local MissionActive = false
 local digging = true
 local shovelObject = nil
@@ -25,6 +26,12 @@ AddEventHandler('mms-treasure:client:starttreasure',function()
         Wait(10)
         TriggerEvent('mms-treasure:client:missionstart',selected)
         VORPcore.NotifyTip(_U('MissionStarted'),  5000)
+        -- Create GPS
+        ClearGpsMultiRoute()
+        Citizen.Wait(500)
+        StartGpsMultiRoute(GetHashKey("COLOR_YELLOW"), true, true)
+        AddPointToGpsMultiRoute(selected.locationblip.x,selected.locationblip.y,selected.locationblip.z,true)
+        SetGpsMultiRouteRender(true)
     else
         TriggerServerEvent('mms-treasure:server:givebackmap')
         VORPcore.NotifyTip(_U('AlreadyActiveMission'), 5000)
@@ -33,17 +40,11 @@ end)
 
 RegisterNetEvent('mms-treasure:client:missionstart')
 AddEventHandler('mms-treasure:client:missionstart',function(selected)
-    BlipCoords = selected.locationblip
-    BlipSprite = selected.blipsprite
     Mission = selected.Mission
-    MissionBlip = BccUtils.Blips:SetBlip(_U('MissionBlipName'), BlipSprite, 0.2, BlipCoords.x,BlipCoords.y,BlipCoords.z)
+    MissionBlip = BccUtils.Blips:SetBlip(_U('MissionBlipName'), selected.blipsprite, 1.0, selected.locationblip.x,selected.locationblip.y,selected.locationblip.z)
     MissionBlipActive = true
     TreasurePrompt = BccUtils.Prompts:SetupPromptGroup()
     treasureprompt = TreasurePrompt:RegisterPrompt(_U('PromptName'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
-    -- Create GPS
-    StartGpsMultiRoute(GetHashKey("COLOR_YELLOW"), true, true)
-    AddPointToGpsMultiRoute(BlipCoords)
-    SetGpsMultiRouteRender(true)
     while MissionActive do
         Wait(1)
         for h,v in pairs(Mission) do
@@ -123,10 +124,10 @@ end)
 
 RegisterNetEvent('mms-treasure:client:spawnchest')
 AddEventHandler('mms-treasure:client:spawnchest', function()
-    local chance = math.random(1,7)
+    local chance = math.random(1,100)
     local playerpos = GetEntityCoords(PlayerPedId())
     local playerheading = GetEntityHeading(PlayerPedId())
-    if chance == 2 or chance == 5 then
+    if chance <= Config.Chance then
         DiggingComplete = true
     local hash = GetHashKey('s_re_rcboatbox01x')
         while not HasModelLoaded(hash) do
@@ -152,64 +153,98 @@ end)
 
 RegisterNetEvent('mms-treasure:client:lockpicktruhe')
 AddEventHandler('mms-treasure:client:lockpicktruhe', function(schatztruhecoords)
-    if Config.ChestNeedPick == true then
-    local TruheGroupPrompt = BccUtils.Prompts:SetupPromptGroup()
-    truheprompt = TruheGroupPrompt:RegisterPrompt(_U('TruhePromptName'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
-    deg1 = math.random(1,360)
-    deg2 = math.random(1,360)
-    deg3 = math.random(1,360)
-    local lockpicksettings = {
-        focus = true, -- Should minigame take nui focus
-        cursor = true, -- Should minigame have cursor  (required for lockpick)
-        maxattempts = 1, -- How many fail attempts are allowed before game over
-        threshold = 10, -- +- threshold to the stage degree (bigger number means easier)
-        hintdelay = 500, --milliseconds delay on when the circle will shake to show lockpick is in the right position.
-        stages = {{deg = deg1},{deg = deg2},{deg = deg3}}
-    }
-    while spawnedtruhe == true do
-        Wait(1)
-        local playerCoords = GetEntityCoords(PlayerPedId())
-        local distance = #(playerCoords - schatztruhecoords)
-        if distance < 6 then
-            TruheGroupPrompt:ShowGroup(_U('TruhePromptName'))
-            if truheprompt:HasCompleted() then
-                local lockpickresult =  VORPcore.Callback.TriggerAwait('mms-treasure:callback:checkforlockpick')
-                if lockpickresult == true then 
-                    MiniGame.Start('lockpick', lockpicksettings, function(result)
-                        if result.unlocked == true then
+    if Config.ChestNeedPick and Config.UseMinigame == 'BCC' then
+            local TruheGroupPrompt = BccUtils.Prompts:SetupPromptGroup()
+            truheprompt = TruheGroupPrompt:RegisterPrompt(_U('TruhePromptName'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
+            deg1 = math.random(1,360)
+            deg2 = math.random(1,360)
+            deg3 = math.random(1,360)
+            local lockpicksettings = {
+                focus = true, -- Should minigame take nui focus
+                cursor = true, -- Should minigame have cursor  (required for lockpick)
+                maxattempts = 1, -- How many fail attempts are allowed before game over
+                threshold = 10, -- +- threshold to the stage degree (bigger number means easier)
+                hintdelay = 500, --milliseconds delay on when the circle will shake to show lockpick is in the right position.
+                stages = {{deg = deg1},{deg = deg2},{deg = deg3}}
+            }
+            while spawnedtruhe == true do
+                Wait(1)
+                local playerCoords = GetEntityCoords(PlayerPedId())
+                local distance = #(playerCoords - schatztruhecoords)
+                if distance < 6 then
+                    TruheGroupPrompt:ShowGroup(_U('TruhePromptName'))
+                    if truheprompt:HasCompleted() then
+                        local lockpickresult =  VORPcore.Callback.TriggerAwait('mms-treasure:callback:checkforlockpick')
+                        if lockpickresult == true then 
+                            MiniGame.Start('lockpick', lockpicksettings, function(result)
+                                if result.unlocked == true then
+                                    LockpickComplete = true
+                                    truheprompt:TogglePrompt(false)
+                                    if MissionActive == true and DiggingComplete == true and LockpickComplete == true then
+                                    TriggerServerEvent('mms-treasure:server:rws')
+                                    AbortMission()
+                                    end
+                                else
+                                    VORPcore.NotifyTip(_U('LockpickingFailed'), 5000)
+                                end
+                            end)
+                        else
+                            VORPcore.NotifyTip(_U('MissingLockpick'),  5000)
+                    end
+                end
+                
+            end
+        end
+    elseif Config.ChestNeedPick and Config.UseMinigame == 'QADR' then
+        local TruheGroupPrompt = BccUtils.Prompts:SetupPromptGroup()
+        truheprompt = TruheGroupPrompt:RegisterPrompt(_U('TruhePromptName'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
+        while spawnedtruhe == true do
+            Wait(1)
+            local playerCoords = GetEntityCoords(PlayerPedId())
+            local distance = #(playerCoords - schatztruhecoords)
+            if distance < 6 then
+                TruheGroupPrompt:ShowGroup(_U('TruhePromptName'))
+                if truheprompt:HasCompleted() then
+                    local lockpickresult =  VORPcore.Callback.TriggerAwait('mms-treasure:callback:checkforlockpick')
+                    if lockpickresult == true then
+                        FreezeEntityPosition(PlayerPedId(),true)
+                        local res = exports["qadr-safe"]:createSafe({math.random(0,99),math.random(0,99),math.random(0,99)})
+                        print(res)
+                        if res then
+                            FreezeEntityPosition(PlayerPedId(),false)
                             LockpickComplete = true
                             truheprompt:TogglePrompt(false)
                             if MissionActive == true and DiggingComplete == true and LockpickComplete == true then
-                            TriggerServerEvent('mms-treasure:server:rws')
-                            AbortMission()
+                                TriggerServerEvent('mms-treasure:server:rws')
+                                AbortMission()
                             end
                         else
+                            FreezeEntityPosition(PlayerPedId(),false)
                             VORPcore.NotifyTip(_U('LockpickingFailed'), 5000)
                         end
-                    end)
-                else
-                    VORPcore.NotifyTip(_U('MissingLockpick'),  5000)
+                    else
+                        VORPcore.NotifyTip(_U('MissingLockpick'),  5000)
+                    end
+                end
+            
             end
         end
-        
-    end
-end
-else
-    local TruheGroupPrompt = BccUtils.Prompts:SetupPromptGroup()
-    truheprompt = TruheGroupPrompt:RegisterPrompt(_U('TruhePromptName2'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
-    while spawnedtruhe == true do
-        Wait(1)
-        local playerCoords = GetEntityCoords(PlayerPedId())
-        local distance = #(playerCoords - schatztruhecoords)
-        if distance < 6 then
-            TruheGroupPrompt:ShowGroup(_U('TruhePromptName2'))
-            if truheprompt:HasCompleted() then
-                TriggerServerEvent('mms-treasure:server:rws')
-                AbortMission()
+    else
+        local TruheGroupPrompt = BccUtils.Prompts:SetupPromptGroup()
+        truheprompt = TruheGroupPrompt:RegisterPrompt(_U('TruhePromptName2'), 0x760A9C6F, 1, 1, true, 'hold', {timedeventhash = 'MEDIUM_TIMED_EVENT'})
+        while spawnedtruhe == true do
+            Wait(1)
+            local playerCoords = GetEntityCoords(PlayerPedId())
+            local distance = #(playerCoords - schatztruhecoords)
+            if distance < 6 then
+                TruheGroupPrompt:ShowGroup(_U('TruhePromptName2'))
+                if truheprompt:HasCompleted() then
+                    TriggerServerEvent('mms-treasure:server:rws')
+                    AbortMission()
+                end
             end
+        end
     end
-end
-end
 end)
 
 ---- UTILS

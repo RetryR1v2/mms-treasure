@@ -2,12 +2,19 @@ Config = {}
 
 Config.defaultlang = "de_lang" -- Set Language (Current Languages: "en_lang" English, "de_lang" German)
 
+------------------- NEW -----------------------------------
+
+Config.UseMinigame = 'QADR'  -- QADR Or BCC are Supported
+Config.Chance = 50 -- 50% Chance to find a Chest
+
+-----------------------------------------------------------
+
 -----------------------------------------------------------------------------------
 ----------------------------------Webhook Settings---------------------------------
 -----------------------------------------------------------------------------------
-Config.EnableWebHook = false
+Config.EnableWebHook = true
 Config.WHTitle = 'Treasure:'
-Config.WHLink = ''  -- Discord WH link Here
+Config.WHLink = 'https://discordapp.com/api/webhooks/1274447688498155602/v2FRnYQTkwNIzJDeaN4S95ZPUqPwuH09iqKJ25v5rS4h7p4VbeLMEk6dSSb-0x4AKI29'  -- Discord WH link Here
 Config.WHColor = 16711680 -- red
 Config.WHName = 'Treasure:' -- name
 Config.WHLogo = '' -- must be 30x30px
@@ -37,23 +44,23 @@ Config.LockpickItem = 'lockpick'   --- Lockpick Item
 Config.OnlyMoney = false  -- Set Both to false to get Money and items But you can only get Money or item its random then if both are false
 Config.OnlyItems = false  -- Set Both to false to get Money and items But you can only get Money or item its random then if both are false
 
-Config.RewardCashMin = 20     --- This is the min or Max cash you can get anything between this will be taken
-Config.RewardCashMax = 25
+Config.RewardCashMin = 10    --- This is the min or Max cash you can get anything between this will be taken
+Config.RewardCashMax = 15
 
 Config.RewardItems = {     ---- This Are the Items and Amount you can get
-    {item = 'diamond', amount = 6},
-    {item = 'goldring', amount = 5},
-    {item = 'emerald', amount = 7},
-    {item = 'fossil', amount = 5}, 
-    {item = 'joint', amount = 8},
-    {item = 'mushroom', amount = 7},
-    {item = 'opium', amount = 6},
+    {item = 'diamond', amount = 3},
+    {item = 'goldring', amount = 2},
+    {item = 'emerald', amount = 3},
+    {item = 'fossil', amount = 2}, 
+    {item = 'joint', amount = 3},
+    {item = 'mushroom', amount = 2},
+    {item = 'opium', amount = 3},
 }
 
 Config.TreasureMissions = {
     {
         locationblip = vector3(-2148.47, 568.85, 117.07),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-2155.38, 567.72, 117.16)},  ------- Little Creek River
             {coords = vector3(-2150.08, 572.25, 117.1)},   ---------
@@ -65,7 +72,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(1171.14, 2087.9, 334.29),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(1172.06, 2089.92, 334.57)},  -------  Ambariono Above N
             {coords = vector3(1181.46, 2088.15, 334.47)},   ---------
@@ -77,7 +84,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(2625.85, 2114.43, 174.0),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(2631.4, 2106.67, 174.15)},  ------- Near Brandywine Drop
             {coords = vector3(2632.42, 2093.0, 174.26)},   ---------
@@ -89,7 +96,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(2361.01, 487.65, 97.36),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(2365.75, 483.22, 97.65)},  ------- Near Van Horn
             {coords = vector3(2370.28, 487.28, 97.35)},   ---------
@@ -101,7 +108,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(1847.56, -873.24, 41.39),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(1846.88, -881.33, 41.29)},  ------- Lagras
             {coords = vector3(1851.01, -869.25, 40.8)},   ---------
@@ -113,7 +120,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(47.2, -627.59, 42.12),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(53.31, -629.0, 41.98)},  ------- Under Flatneck Station At the beach
             {coords = vector3(52.68, -638.43, 41.92)},   ---------
@@ -125,7 +132,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(-1640.75, 1225.29, 351.6),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-1642.5, 1240.3, 351.24)},  ------- Camp at Mount hagen
             {coords = vector3(-1640.16, 1231.96, 351.88)},   ---------
@@ -137,7 +144,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(-1287.65, 2406.75, 305.7),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-1280.18, 2404.38, 305.14)},  ------- Icy Town near Spider Gorge
             {coords = vector3(-1281.26, 2410.54, 305.37)},   ---------
@@ -149,7 +156,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(-1094.96, 742.35, 107.18),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-1094.3, 735.48, 106.18)},  ------- Cattail Pond
             {coords = vector3(-1102.29, 733.04, 107.44)},   ---------
@@ -161,7 +168,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(-2175.39, -352.92, 188.23),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-2169.33, -358.5, 187.67)},  ------- Near Strawberry
             {coords = vector3(-2173.89, -365.13, 186.5)},   ---------
@@ -173,7 +180,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(121.37, 1825.41, 200.04),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(128.36, 1823.78, 200.26)},  ------- Cotorra Springs
             {coords = vector3(132.57, 1815.37, 199.29)},   ---------
@@ -185,7 +192,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(-770.84, -757.14, 51.84),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-777.4, -759.3, 52.13)},  ------- Near Riggs Station
             {coords = vector3(-784.64, -754.75, 52.85)},   ---------
@@ -197,7 +204,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(-1392.38, -2579.83, 77.94),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-1399.13, -2580.56, 77.83)},  ------- Near Thieves Landing
             {coords = vector3(-1405.53, -2576.6, 77.28)},   ---------
@@ -209,7 +216,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(-4014.71, -2121.22, -5.58),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-4020.68, -2117.13, -5.62)},  ------- Twin Rocks
             {coords = vector3(-4017.64, -2106.13, -5.69)},   ---------
@@ -221,7 +228,7 @@ Config.TreasureMissions = {
     },
     {
         locationblip = vector3(-2086.38, -1751.57, 131.48),  -- This is The Area Position where you have to go to find dig Positions
-        blipsprite = 'blip_ambient_secret',
+        blipsprite = 'blip_ambient_gang_leader',
         Mission = {
             {coords = vector3(-2083.35, -1756.82, 130.81)},  ------- Near Manzanita Post
             {coords = vector3(-2087.7, -1761.75, 131.13)},   ---------
