@@ -27,6 +27,7 @@
 - Only Need to Update if you Wanna Use Webhook if Webhook is Off you can Ignore that Bugfix
 - 1.1.6 Added GPS Usage to Find the Location 
 - 1.1.7 Added a New Minigame
+- Changed Versioncheck to VORP Basic
 - Now Can Chose Between BCC Minigame or QADR Safe. ( You Need the Script yadr-safe or bcc minigames.)
 - Fixed GPS Route
 - Reworked Change System See Config.Chance
