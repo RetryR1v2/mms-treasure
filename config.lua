@@ -4,7 +4,7 @@ Config.defaultlang = "de_lang" -- Set Language (Current Languages: "en_lang" Eng
 
 ------------------- NEW -----------------------------------
 
-Config.UseMinigame = 'QADR'  -- QADR Or BCC are Supported
+Config.UseMinigame = 'BCC'  -- QADR Or BCC are Supported
 Config.Chance = 50 -- 50% Chance to find a Chest
 
 -----------------------------------------------------------

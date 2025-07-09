@@ -1,7 +1,7 @@
 local VORPcore = exports.vorp_core:GetCore()
 local BccUtils = exports['bcc-utils'].initiate()
 if Config.UseMinigame == 'BCC' then
-    local MiniGame = exports['bcc-minigames'].initiate()
+    MiniGame = exports['bcc-minigames'].initiate()
 end
 local MissionActive = false
 local digging = true
