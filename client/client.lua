@@ -1,5 +1,6 @@
 local VORPcore = exports.vorp_core:GetCore()
 local BccUtils = exports['bcc-utils'].initiate()
+local MiniGame = nil
 if Config.UseMinigame == 'BCC' then
     MiniGame = exports['bcc-minigames'].initiate()
 end
